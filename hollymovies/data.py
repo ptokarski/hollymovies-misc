@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import date, datetime
 
 from sqlalchemy import Date, DateTime
 
@@ -7,8 +7,16 @@ from hollymovies import models
 from hollymovies.models import all_models
 
 
+def _dump_field(value):
+    if isinstance(value, datetime):
+        return value.strftime('%Y-%m-%dT%H:%M:%SZ')
+    if isinstance(value, date):
+        return value.strftime('%Y-%m-%d')
+    return value
+
+
 def _to_dict(columns, entry):
-    return {column: getattr(entry, column) for column in columns}
+    return {column: _dump_field(getattr(entry, column)) for column in columns}
 
 
 def _dump_entry(table, entry):
