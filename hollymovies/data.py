@@ -1,4 +1,7 @@
 import json
+from datetime import datetime
+
+from sqlalchemy import Date, DateTime
 
 from hollymovies import models
 from hollymovies.models import all_models
@@ -26,11 +29,28 @@ def dumpdata(output_file):
             _dump_model(output_file, session, model)
 
 
+def _load_field(model, fieldname, value):
+    field_type = getattr(model, fieldname).property.columns[0].type
+    if isinstance(field_type, DateTime):
+        return datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%fZ')
+    if isinstance(field_type, Date):
+        return datetime.strptime(value, '%Y-%m-%d').date()
+    return value
+
+
+def _to_model(model, entry):
+    kwargs = {
+        fieldname: _load_field(model, fieldname, value)
+        for fieldname, value in entry.items()
+    }
+    return model(**kwargs)
+
+
 def _objects_to_add(table_to_model, input_file):
     for line in input_file:
         entry = json.loads(line)
         model = table_to_model[entry['model']]
-        yield model(**entry['fields'])
+        yield _to_model(model, entry['fields'])
 
 
 def loaddata(input_file):
