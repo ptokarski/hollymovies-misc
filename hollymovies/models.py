@@ -1,16 +1,23 @@
 from contextlib import contextmanager
 
 from sqlalchemy import Column, Integer, String, create_engine
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 from sqlalchemy.orm import sessionmaker
 
-ModelBase = declarative_base()
+models_registry = {}
+ModelBase = declarative_base(class_registry=models_registry)
 
 
 class Genre(ModelBase):
     __tablename__ = 'genre'
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
+
+
+def all_models():
+    for model in models_registry.values():
+        if isinstance(model, DeclarativeMeta):
+            yield model
 
 
 ENGINE = create_engine('sqlite:///db.sqlite3')

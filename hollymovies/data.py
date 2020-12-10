@@ -19,6 +19,7 @@ def _dump_model(output_file, session, model):
         output_file.write(f'{dumped_query}\n')
 
 
-def dumpdata(model, output_path):
+def dumpdata(output_path):
     with open(output_path, 'w') as output_file, models.session() as session:
-        _dump_model(output_file, session, model)
+        for model in models.all_models():
+            _dump_model(output_file, session, model)
