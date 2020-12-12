@@ -1,16 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask
 from flask_bootstrap import Bootstrap
 
+from hollymovies.views import main_blueprint
+
 app = Flask(__name__)
+app.register_blueprint(main_blueprint)
 Bootstrap(app)
-
-
-@app.route('/<s0>')
-def hello(s0):
-    s1 = request.args['s1']
-    return render_template(
-        'hello.html', adjectives=[s0, s1, 'beautiful', 'wonderful']
-    )
 
 
 if __name__ == "__main__":
