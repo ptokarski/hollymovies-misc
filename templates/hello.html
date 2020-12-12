@@ -1,13 +1,18 @@
-<!DOCTYPE html>
-<html>
-  <body>
-    <h1>Welcome to HollyMovies!</h1>
-    {% for adjective in adjectives %}
-      {% if adjective != 'cruel' %}
-        <p>This is a {{ adjective }} world...</p>
-      {% endif %}
-    {% endfor %}
-  </body>
-</html>
+{% extends "base.html" %}
 
+{% block navbar_items %}
+  <div class="navbar-nav">
+    <a class="nav-item nav-link active" href="/">
+      Home
+    </a>
+  </div>
+{% endblock %}
 
+{% block content_main %}
+  <h1>Welcome to HollyMovies!</h1>
+  {% for adjective in adjectives %}
+    {% if adjective != 'cruel' %}
+      <p>This is a {{ adjective }} world...</p>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
