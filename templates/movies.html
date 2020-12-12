@@ -10,9 +10,11 @@
 
 {% block content_main %}
   <h1>Welcome to HollyMovies!</h1>
-  {% for adjective in adjectives %}
-    {% if adjective != 'cruel' %}
-      <p>This is a {{ adjective }} world...</p>
-    {% endif %}
-  {% endfor %}
+  <ul>
+    {% for movie in movies %}
+      <li>
+        {{ movie.title }} ({{ movie.released.year }}) - {{ movie.genre.name }}
+      </li>
+    {% endfor %}
+  </ul>
 {% endblock %}

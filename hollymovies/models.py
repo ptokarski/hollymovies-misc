@@ -37,7 +37,7 @@ def all_models():
 
 
 ENGINE = create_engine('sqlite:///db.sqlite3')
-Session = sessionmaker(bind=ENGINE)
+Session = sessionmaker(autoflush=False, bind=ENGINE)
 
 
 @contextmanager
