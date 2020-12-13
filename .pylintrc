@@ -1,0 +1,24 @@
+[MESSAGES CONTROL]
+disable=
+  # convention
+  bad-continuation,  # does not accept some harmless and quite clear formatting in our style
+  missing-module-docstring,
+  missing-function-docstring,
+  missing-class-docstring,
+  # refactor
+  too-few-public-methods,
+  duplicate-code,  # its a buggy feature
+  # warning
+  modelform-uses-exclude,  # rather pointless warning
+  fixme,  # we want to enable FIXME annotations in code-base
+  new-db-field-with-default,  # sometimes crashes if placed in comment
+
+[SIMILARITIES]
+ignore-imports=yes
+
+[FORMAT]
+max-line-length=80
+
+[MASTER]
+load-plugins=pylint_flask_sqlalchemy
+ignore=lambda_functions
