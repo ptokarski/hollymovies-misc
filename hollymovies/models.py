@@ -1,48 +1,38 @@
 from contextlib import contextmanager
 from datetime import datetime
 
-from sqlalchemy import (
-    Column, Date, DateTime, ForeignKey, Integer, String, create_engine
-)
-from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.declarative import DeclarativeMeta
 
-models_registry = {}
-ModelBase = declarative_base(class_registry=models_registry)
+db = SQLAlchemy()
 
 
-class Genre(ModelBase):
-    __tablename__ = 'genre'
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    movies = relationship('Movie', back_populates='genre')
+class Genre(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    movies = db.relationship('Movie', back_populates='genre')
 
 
-class Movie(ModelBase):
-    __tablename__ = 'movie'
-    id = Column(Integer, primary_key=True)
-    title = Column(String(length=128), nullable=False)
-    genre_id = Column(Integer, ForeignKey('genre.id'), nullable=False)
-    genre = relationship('Genre', back_populates='movies')
-    rating = Column(Integer, nullable=False)
-    released = Column(Date, nullable=False)
-    description = Column(String)
-    created = Column(DateTime, default=datetime.utcnow)
+class Movie(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(length=128), nullable=False)
+    genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
+    genre = db.relationship('Genre', back_populates='movies')
+    rating = db.Column(db.Integer, nullable=False)
+    released = db.Column(db.Date, nullable=False)
+    description = db.Column(db.String)
+    created = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 def all_models():
-    for model in models_registry.values():
+    for model in db.Model._decl_class_registry.values():
         if isinstance(model, DeclarativeMeta):
             yield model
 
 
-ENGINE = create_engine('sqlite:///db.sqlite3')
-Session = sessionmaker(autoflush=False, bind=ENGINE)
-
-
 @contextmanager
 def session():
-    result = Session()
+    result = db.session()
     try:
         yield result
         result.commit()
