@@ -1,8 +1,8 @@
 """create genre
 
-Revision ID: c476d78eec4a
+Revision ID: 4bdb36af2175
 Revises: 
-Create Date: 2020-12-09 21:40:19.479501
+Create Date: 2020-12-13 19:35:07.114307
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c476d78eec4a'
+revision = '4bdb36af2175'
 down_revision = None
 branch_labels = None
 depends_on = None
