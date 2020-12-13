@@ -1,8 +1,8 @@
 """create movie
 
-Revision ID: ed39a20aefe7
-Revises: c476d78eec4a
-Create Date: 2020-12-10 22:59:13.040535
+Revision ID: a9105fc9586b
+Revises: 4bdb36af2175
+Create Date: 2020-12-13 19:35:59.703771
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ed39a20aefe7'
-down_revision = 'c476d78eec4a'
+revision = 'a9105fc9586b'
+down_revision = '4bdb36af2175'
 branch_labels = None
 depends_on = None
 
