@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template
+from flask import Blueprint, redirect, render_template, url_for
 from flask_wtf import FlaskForm
 
 from hollymovies import models
@@ -26,7 +26,7 @@ def movie_create():
     )
     with models.session() as session:
         session.add(movie)
-    return redirect('/')
+    return redirect(url_for('main.movies'))
 
 
 @main_blueprint.route('/movie/update/<movie_id>', methods=['GET', 'POST'])
@@ -42,7 +42,7 @@ def movie_update(movie_id):
     movie.description = form.description.data
     with models.session() as session:
         session.add(movie)
-    return redirect('/')
+    return redirect(url_for('main.movies'))
 
 
 @main_blueprint.route('/movie/delete/<movie_id>', methods=['GET', 'POST'])
@@ -54,4 +54,4 @@ def movie_delete(movie_id):
         return render_template('movie_delete.html', **context)
     with models.session() as session:
         session.delete(movie)
-    return redirect('/')
+    return redirect(url_for('main.movies'))

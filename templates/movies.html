@@ -6,6 +6,8 @@
     {% for movie in movies %}
       <li>
         {{ movie.title }} ({{ movie.released.year }}) - {{ movie.genre.name }}
+        <a href="{{ url_for('main.movie_update', movie_id=movie.id) }}">update</a> /
+        <a href="{{ url_for('main.movie_delete', movie_id=movie.id) }}">delete</a>
       </li>
     {% endfor %}
   </ul>
