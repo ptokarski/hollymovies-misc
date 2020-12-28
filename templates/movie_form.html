@@ -12,6 +12,9 @@
         class="form-control{% if form.title.errors %} is-invalid{% endif %}"
         name="title" id="title" value="{{ form.title.data or '' }}"
       >
+      {% for error in form.title.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+      {% endfor %}
     </div>
 
     <div class="form-group">
@@ -27,6 +30,9 @@
           >{{ choice_name }}</option>
         {% endfor %}
       </select>
+      {% for error in form.genre.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+      {% endfor %}
     </div>
 
     <div class="form-group">
@@ -36,6 +42,9 @@
         name="rating" id="rating" type="number"
         value="{{ form.rating.data or '' }}"
       >
+      {% for error in form.rating.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+      {% endfor %}
     </div>
 
     <div class="form-group">
@@ -45,6 +54,9 @@
         name="released" id="released" type="date"
         value="{{ form.released.data or '' }}"
       >
+      {% for error in form.released.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+      {% endfor %}
     </div>
 
     <div class="form-group">
@@ -53,6 +65,9 @@
         class="form-control{% if form.description.errors %} is-invalid{% endif %}"
         name="description" id="description"
       >{{ form.description.data or '' }}</textarea>
+      {% for error in form.description.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+      {% endfor %}
     </div>
 
     <input type="submit" class="btn btn-primary">
