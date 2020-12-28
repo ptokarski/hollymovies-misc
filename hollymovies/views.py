@@ -26,3 +26,19 @@ def movie_create():
     with models.session() as session:
         session.add(movie)
     return redirect('/')
+
+
+@main_blueprint.route('/movie/update/<movie_id>', methods=['GET', 'POST'])
+def movie_update(movie_id):
+    movie = models.Movie.query.get(movie_id)
+    form = MovieForm(obj=movie)
+    if not form.validate_on_submit():
+        return render_template('movie_form.html', form=form)
+    movie.title = form.title.data
+    movie.genre_id = int(form.genre.data)
+    movie.rating = form.rating.data
+    movie.released = form.released.data
+    movie.description = form.description.data
+    with models.session() as session:
+        session.add(movie)
+    return redirect('/')
