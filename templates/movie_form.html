@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content_main %}
+
+  <form method="POST">
+
+    {{ form.csrf_token }}
+
+    <div class="form-group">
+      {{ form.title.label }}
+      <input
+        class="form-control{% if form.title.errors %} is-invalid{% endif %}"
+        name="title" id="title" value="{{ form.title.data or '' }}"
+      >
+    </div>
+
+    <div class="form-group">
+      {{ form.genre.label }}
+      <select
+        class="custom-select{% if form.genre.errors %} is-invalid{% endif %}"
+        name="genre" id="genre"
+      >
+        {% for choice_id, choice_name in form.genre.choices %}
+          <option
+            value="{{ choice_id }}"
+            {% if form.genre.data | int == choice_id %}selected{% endif %}
+          >{{ choice_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      {{ form.rating.label }}
+      <input
+        class="form-control{% if form.rating.errors %} is-invalid{% endif %}"
+        name="rating" id="rating" type="number"
+        value="{{ form.rating.data or '' }}"
+      >
+    </div>
+
+    <div class="form-group">
+      {{ form.released.label }}
+      <input
+        class="form-control{% if form.released.errors %} is-invalid{% endif %}"
+        name="released" id="released" type="date"
+        value="{{ form.released.data or '' }}"
+      >
+    </div>
+
+    <div class="form-group">
+      {{ form.description.label }}
+      <textarea
+        class="form-control{% if form.description.errors %} is-invalid{% endif %}"
+        name="description" id="description"
+      >{{ form.description.data or '' }}</textarea>
+    </div>
+
+    <input type="submit" class="btn btn-primary">
+
+  </form>
+{% endblock %}
