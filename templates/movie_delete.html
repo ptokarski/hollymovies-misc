@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content_main %}
+  <form method="POST">
+    {{ form.csrf_token }}
+    <p>Do you really want to delete movie <em>{{ title }}</em>?</p>
+    <input type="submit" class="btn btn-danger">
+  </form>
+{% endblock %}

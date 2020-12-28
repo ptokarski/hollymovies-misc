@@ -1,4 +1,5 @@
 from flask import Blueprint, redirect, render_template
+from flask_wtf import FlaskForm
 
 from hollymovies import models
 from hollymovies.forms import MovieForm
@@ -41,4 +42,16 @@ def movie_update(movie_id):
     movie.description = form.description.data
     with models.session() as session:
         session.add(movie)
+    return redirect('/')
+
+
+@main_blueprint.route('/movie/delete/<movie_id>', methods=['GET', 'POST'])
+def movie_delete(movie_id):
+    movie = models.Movie.query.get(movie_id)
+    form = FlaskForm()
+    if not form.validate_on_submit():
+        context = {'form': form, 'title': movie.title}
+        return render_template('movie_delete.html', **context)
+    with models.session() as session:
+        session.delete(movie)
     return redirect('/')
