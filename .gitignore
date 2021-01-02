@@ -1,5 +1,6 @@
 *.sqlite3
 .vscode/.ropeproject
+.vscode/settings.json
 __pycache__/
 fixtures-dumped.json
 venv
