@@ -1,3 +1,5 @@
+from os import environ as E
+
 import click
 from flask import Flask
 from flask_bootstrap import Bootstrap
@@ -7,9 +9,14 @@ from hollymovies.data import dumpdata, loaddata
 from hollymovies.models import db
 from hollymovies.views import main_blueprint
 
+DB_CONFIG = {
+    key: E[f'DB{key}'] for key in ['SCHEMA', 'USER', 'PASS', 'HOST', 'PORT']
+}
+DB_URI_TEMPLATE = '{SCHEMA}://{USER}:{PASS}@{HOST}:{PORT}'
+
 app = Flask(__name__)
 app.register_blueprint(main_blueprint)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI_TEMPLATE.format(**DB_CONFIG)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'Fnioz1Cnl2grWSA2MLEbCrBuJjJK0ELB'
 db.init_app(app)
