@@ -5,3 +5,4 @@ __pycache__/
 fixtures-dumped.json
 venv
 .env-db
+data
